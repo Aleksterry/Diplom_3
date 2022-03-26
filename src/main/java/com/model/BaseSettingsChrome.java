@@ -16,7 +16,6 @@ abstract public class BaseSettingsChrome {
 
     public void setUpChrome() {
         WebDriverManager.chromedriver().setup();
-        System.setProperty("webdriver.chrome.driver", "src/resources/chromedriver.exe");
         driver = new ChromeDriver();
         setWebDriver(driver);
         driver.manage().window().maximize();
