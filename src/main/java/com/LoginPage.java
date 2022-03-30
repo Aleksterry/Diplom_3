@@ -7,8 +7,6 @@ import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.webdriver;
-import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.hamcrest.CoreMatchers.startsWith;
 
 public class LoginPage {
@@ -109,7 +107,6 @@ public class LoginPage {
         MatcherAssert.assertThat("Text on page is correct", textOnLoginPage.getText(), startsWith(expected));
     }
 
-
     /**
      * Проверка загрузки элементов страницы входа
      */
@@ -118,14 +115,4 @@ public class LoginPage {
         passwordField.is(Condition.visible);
         checkTextOnLoginPage();
     }
-
-
-    /**
-     * Проверка урла страницы
-     */
-    public void checkUrlPage() {
-        webdriver().shouldHave(url(LOGIN_URL));
-    }
-
-
 }

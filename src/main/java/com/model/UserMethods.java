@@ -1,5 +1,6 @@
 package com.model;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
@@ -7,10 +8,9 @@ import static io.restassured.RestAssured.given;
 public class UserMethods extends RestAssured {
 
     private final String USER_PATH = "api/auth/";
-    private String accessToken;
 
-
-    public ValidatableResponse create(User user) {
+    @Step("Create user")
+    public ValidatableResponse createUser(User user) {
         return given()
                 .spec(getBaseSpec())
                 .body(user)
@@ -20,7 +20,8 @@ public class UserMethods extends RestAssured {
                 .log().all();
     }
 
-    public ValidatableResponse login(UserCredentials userCredentials) {
+    @Step("Login user")
+    public ValidatableResponse loginUser(UserCredentials userCredentials) {
         return given()
                 .spec(getBaseSpec())
                 .body(userCredentials)
@@ -30,8 +31,8 @@ public class UserMethods extends RestAssured {
                 .log().all();
     }
 
-
-    public ValidatableResponse delete(String accessToken) {
+    @Step("Delete user")
+    public ValidatableResponse deleteUser(String accessToken) {
         return given()
                 .spec(getBaseSpec())
                 .auth().oauth2(accessToken)
@@ -40,7 +41,5 @@ public class UserMethods extends RestAssured {
                 .then()
                 .log().all();
     }
-
-
 }
 

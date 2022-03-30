@@ -1,15 +1,12 @@
 package com;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
 import static com.codeborne.selenide.Condition.enabled;
-import static com.codeborne.selenide.Selenide.webdriver;
-import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.hamcrest.CoreMatchers.containsString;
 
 
@@ -97,13 +94,6 @@ public class MainPage {
     public void checkTextOnMainPage() {
         String expected = "Соберите бургер";
         MatcherAssert.assertThat("Text on page is correct", textGatherBurger.getText(), containsString(expected));
-    }
-
-    /**
-     * Проверка урла страницы
-     */
-    public void checkUrlPage() {
-        webdriver().shouldHave(url(BASE_URL));
     }
 
     /**

@@ -7,14 +7,11 @@ import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.webdriver;
-import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.hamcrest.CoreMatchers.startsWith;
 
 public class RegisterPage {
 
     public final static String REGISTER_URL = "https://stellarburgers.nomoreparties.site/register";
-    private User user;
 
 
     // ---------- Локаторы
@@ -131,18 +128,9 @@ public class RegisterPage {
     }
 
     /**
-     * Проверка урла страницы
-     */
-    public void checkUrlPage() {
-        webdriver().shouldHave(url(REGISTER_URL));
-    }
-
-    /**
      * Проверка текста ошибки
      */
     public void checkPasswordFieldErrorText() {
         MatcherAssert.assertThat("Error text of password field is correct", passwordFieldErrorText.getText(), startsWith("Некорректный пароль"));
     }
-
-
 }

@@ -7,15 +7,12 @@ import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.webdriver;
-import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.hamcrest.CoreMatchers.containsString;
 
 
 public class AccountProfilePage {
 
     public final static String ACCOUNT_PROFILE_URL = "https://stellarburgers.nomoreparties.site/account/profile";
-    private User user;
 
     // ---------- Локаторы
 
@@ -108,12 +105,4 @@ public class AccountProfilePage {
         MatcherAssert.assertThat("User name is correct", nameField.getValue(), containsString(user.name));
         MatcherAssert.assertThat("User email is correct", emailField.getValue(), containsString((user.email).toLowerCase()));
     }
-
-    /**
-     * Проверка урла страницы
-     */
-    public void checkUrlPage() {
-        webdriver().shouldHave(url(ACCOUNT_PROFILE_URL));
-    }
-
 }
