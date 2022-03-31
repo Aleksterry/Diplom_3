@@ -1,6 +1,5 @@
 package com;
 
-import com.model.BasePage;
 import com.model.BaseSettings;
 import com.model.User;
 import io.qameta.allure.Description;
@@ -15,9 +14,8 @@ import static com.codeborne.selenide.Selenide.open;
 @RunWith(Parameterized.class)
 public class RegisterNegativeTest extends BaseSettings {
 
-    private RegisterPage registerPage;
-    private BasePage basePage;
     private final String browser;
+    private RegisterPage registerPage;
 
     public RegisterNegativeTest(String browser) {
         this.browser = browser;
@@ -36,13 +34,11 @@ public class RegisterNegativeTest extends BaseSettings {
     public void openRegisterPage() {
         init(browser);
 
-        basePage = new BasePage();
-
         // открыть браузер
         registerPage = open(RegisterPage.REGISTER_URL, RegisterPage.class);
 
         //Проверка перехода на страницу регистрации
-        basePage.checkUrlPage(RegisterPage.REGISTER_URL);
+        checkUrlPage(RegisterPage.REGISTER_URL);
         // Проверить наличие элементов на странице регистрации
         registerPage.checkRegisterPageElementsIsVisible();
     }
@@ -62,7 +58,7 @@ public class RegisterNegativeTest extends BaseSettings {
         registerPage.checkPasswordFieldErrorText();
 
         //Проверка, что страница не изменилась
-        basePage.checkUrlPage(RegisterPage.REGISTER_URL);
+        checkUrlPage(RegisterPage.REGISTER_URL);
         registerPage.checkTextOnRegisterPage();
     }
 }

@@ -1,6 +1,9 @@
 package com;
 
-import com.model.*;
+import com.model.BaseSettings;
+import com.model.User;
+import com.model.UserCredentials;
+import com.model.UserMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.junit.After;
@@ -15,13 +18,12 @@ import static com.codeborne.selenide.Selenide.page;
 @RunWith(Parameterized.class)
 public class RegisterPositiveTest extends BaseSettings {
 
+    private final String browser;
     private MainPage mainPage;
     private LoginPage loginPage;
     private RegisterPage registerPage;
     private UserMethods userMethods;
     private String accessToken;
-    private BasePage basePage;
-    private final String browser;
 
     public RegisterPositiveTest(String browser) {
         this.browser = browser;
@@ -38,7 +40,6 @@ public class RegisterPositiveTest extends BaseSettings {
     @Before
     public void setup() {
         init(browser);
-        basePage = new BasePage();
 
         // открыть браузер
         mainPage = open(MainPage.BASE_URL, MainPage.class);
@@ -47,14 +48,14 @@ public class RegisterPositiveTest extends BaseSettings {
         registerPage = page(RegisterPage.class);
 
         //Проверка перехода на главную страницу и её загрузки
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         mainPage.checkTextOnMainPage();
     }
 
     @After
     public void tearDownUser() {
         // Удаление пользователя
-        basePage.deleteUser(accessToken, userMethods);
+        deleteUser(accessToken, userMethods);
     }
 
     @Step("Get user accessToken")
@@ -73,14 +74,14 @@ public class RegisterPositiveTest extends BaseSettings {
         mainPage.clickLoginInAccountButton();
 
         // Проверить переход  и загрузку страницы логина
-        basePage.checkUrlPage(LoginPage.LOGIN_URL);
+        checkUrlPage(LoginPage.LOGIN_URL);
         loginPage.checkTextOnLoginPage();
 
         // Кликнуть "Зарегистироваться"
         loginPage.clickRegisterButton();
 
         //Проверка перехода на страницу регистрации
-        basePage.checkUrlPage(RegisterPage.REGISTER_URL);
+        checkUrlPage(RegisterPage.REGISTER_URL);
 
         // Проверить наличие элементов на странице регистрации
         registerPage.checkRegisterPageElementsIsVisible();
@@ -93,14 +94,14 @@ public class RegisterPositiveTest extends BaseSettings {
         registerPage.clickRegisterButton();
 
         // Проверка перехода на страницу входа
-        basePage.checkUrlPage(LoginPage.LOGIN_URL);
+        checkUrlPage(LoginPage.LOGIN_URL);
         loginPage.checkTextOnLoginPage();
 
         //Вход под зарегистрированным пользователем
         loginPage.login(user);
 
         //Проверка перехода на главную страницу после входа
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         mainPage.checkTextOnMainPage();
 
         // Проверка, что кнопка "Войти в аккаунт" изменилась на "Оформить заказ" - вход успешно совершен

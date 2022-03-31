@@ -1,6 +1,5 @@
 package com;
 
-import com.model.BasePage;
 import com.model.BaseSettings;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -13,9 +12,8 @@ import static com.codeborne.selenide.Selenide.open;
 @RunWith(Parameterized.class)
 public class ConstructorTabsSwitchPositiveTest extends BaseSettings {
 
-    private MainPage mainPage;
-    private BasePage basePage;
     private final String browser;
+    private MainPage mainPage;
 
     public ConstructorTabsSwitchPositiveTest(String browser) {
         this.browser = browser;
@@ -33,13 +31,11 @@ public class ConstructorTabsSwitchPositiveTest extends BaseSettings {
     public void setup() {
         init(browser);
 
-        basePage = new BasePage();
-
         // открыть браузер
         mainPage = open(MainPage.BASE_URL, MainPage.class);
 
         //Проверка перехода на главную страницу и её загрузки
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         mainPage.checkTextOnMainPage();
     }
 
@@ -49,7 +45,7 @@ public class ConstructorTabsSwitchPositiveTest extends BaseSettings {
     public void testConstructorTabsSwitchSaucePositive() {
 
         //Проверка перехода на главную страницу
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
 
         //Клик по вкладке конструктора "Соусы"
         mainPage.clickSauceButton();
@@ -63,7 +59,7 @@ public class ConstructorTabsSwitchPositiveTest extends BaseSettings {
     public void testConstructorTabsSwitchStaffPositive() {
 
         //Проверка перехода на главную страницу
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
 
         //Клик по вкладке конструктора "Начинки"
         mainPage.clickStaffButton();
@@ -77,7 +73,7 @@ public class ConstructorTabsSwitchPositiveTest extends BaseSettings {
     public void testConstructorTabsSwitchBunPositive() {
 
         //Проверка перехода на главную страницу
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
 
         //Клик по вкладке конструктора "Соусы"
         mainPage.clickSauceButton();

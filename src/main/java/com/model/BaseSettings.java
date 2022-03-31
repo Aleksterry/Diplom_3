@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import static com.codeborne.selenide.WebDriverRunner.setWebDriver;
 
 
-public class BaseSettings extends BasePage{
+public class BaseSettings extends BasePage {
 
     WebDriver driver;
 
@@ -26,7 +26,6 @@ public class BaseSettings extends BasePage{
 
     public void setUpYandex() {
         System.setProperty("webdriver.chrome.driver", "src/resources/yandexdriver.exe");
-        ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver();
         setWebDriver(driver);
         driver.manage().window().maximize();

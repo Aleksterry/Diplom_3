@@ -1,6 +1,5 @@
 package com;
 
-import com.model.BasePage;
 import com.model.BaseSettings;
 import com.model.User;
 import com.model.UserMethods;
@@ -19,14 +18,13 @@ import static com.codeborne.selenide.Selenide.page;
 public class LoginRegisterButtonPositiveTest extends BaseSettings {
 
 
+    private final String browser;
     private MainPage mainPage;
     private LoginPage loginPage;
     private RegisterPage registerPage;
     private User user;
     private UserMethods userMethods;
     private String accessToken;
-    private BasePage basePage;
-    private final String browser;
 
     public LoginRegisterButtonPositiveTest(String browser) {
         this.browser = browser;
@@ -45,11 +43,10 @@ public class LoginRegisterButtonPositiveTest extends BaseSettings {
         init(browser);
 
         userMethods = new UserMethods();
-        basePage = new BasePage();
 
         // Создание пользователя
         user = User.getRandom();
-        accessToken = basePage.createUser(user, userMethods);
+        accessToken = createUser(user, userMethods);
 
         // Открытие браузера, страницы регистрацмм
         openRegisterPage();
@@ -58,7 +55,7 @@ public class LoginRegisterButtonPositiveTest extends BaseSettings {
     @After
     public void tearDownUser() {
         // Удаление пользователя
-        basePage.deleteUser(accessToken, userMethods);
+        deleteUser(accessToken, userMethods);
     }
 
 
@@ -71,7 +68,7 @@ public class LoginRegisterButtonPositiveTest extends BaseSettings {
         registerPage = open(RegisterPage.REGISTER_URL, RegisterPage.class);
 
         //Проверка перехода на страницу регистрации
-        basePage.checkUrlPage(RegisterPage.REGISTER_URL);
+        checkUrlPage(RegisterPage.REGISTER_URL);
     }
 
 
@@ -83,7 +80,7 @@ public class LoginRegisterButtonPositiveTest extends BaseSettings {
         registerPage.clickLoginButton();
 
         // Проверить переход на страницу логина
-        basePage.checkUrlPage(LoginPage.LOGIN_URL);
+        checkUrlPage(LoginPage.LOGIN_URL);
 
         // Проверить наличия элементов на странице входа
         loginPage.checkLoginPageElementsIsVisible();
@@ -95,7 +92,7 @@ public class LoginRegisterButtonPositiveTest extends BaseSettings {
         loginPage.clickLoginButton();
 
         // Проверка, что вход совершен
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         mainPage.checkTextOnMainPage();
         mainPage.checkPlaceOrderButtonText();
     }

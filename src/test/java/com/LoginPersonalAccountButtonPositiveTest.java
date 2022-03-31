@@ -1,6 +1,5 @@
 package com;
 
-import com.model.BasePage;
 import com.model.BaseSettings;
 import com.model.User;
 import com.model.UserMethods;
@@ -18,13 +17,12 @@ import static com.codeborne.selenide.Selenide.page;
 @RunWith(Parameterized.class)
 public class LoginPersonalAccountButtonPositiveTest extends BaseSettings {
 
+    private final String browser;
     private MainPage mainPage;
     private LoginPage loginPage;
     private User user;
     private UserMethods userMethods;
     private String accessToken;
-    private BasePage basePage;
-    private final String browser;
 
     public LoginPersonalAccountButtonPositiveTest(String browser) {
         this.browser = browser;
@@ -43,11 +41,10 @@ public class LoginPersonalAccountButtonPositiveTest extends BaseSettings {
         init(browser);
 
         userMethods = new UserMethods();
-        basePage = new BasePage();
 
         // Создание пользователя
         user = User.getRandom();
-        accessToken = basePage.createUser(user, userMethods);
+        accessToken = createUser(user, userMethods);
 
         // Открытие браузера
         openMainPage();
@@ -56,7 +53,7 @@ public class LoginPersonalAccountButtonPositiveTest extends BaseSettings {
     @After
     public void tearDownUser() {
         // Удаление пользователя
-        basePage.deleteUser(accessToken, userMethods);
+        deleteUser(accessToken, userMethods);
     }
 
     @Step("Open main page")
@@ -67,7 +64,7 @@ public class LoginPersonalAccountButtonPositiveTest extends BaseSettings {
         mainPage = open(MainPage.BASE_URL, MainPage.class);
 
         //Проверка перехода на главную страницу
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         //Проверка загрузки главной страницы
         mainPage.checkTextOnMainPage();
     }
@@ -81,7 +78,7 @@ public class LoginPersonalAccountButtonPositiveTest extends BaseSettings {
         mainPage.clickPersonalAccountButton();
 
         // Проверить переход на страницу логина
-        basePage.checkUrlPage(LoginPage.LOGIN_URL);
+        checkUrlPage(LoginPage.LOGIN_URL);
 
         // Проверить наличия элементов на странице входа
         loginPage.checkLoginPageElementsIsVisible();
@@ -93,7 +90,7 @@ public class LoginPersonalAccountButtonPositiveTest extends BaseSettings {
         loginPage.clickLoginButton();
 
         // Проверка, что вход совершен
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         mainPage.checkTextOnMainPage();
         mainPage.checkPlaceOrderButtonText();
     }

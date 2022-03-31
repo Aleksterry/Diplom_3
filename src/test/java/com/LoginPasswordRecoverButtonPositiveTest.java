@@ -1,6 +1,5 @@
 package com;
 
-import com.model.BasePage;
 import com.model.BaseSettings;
 import com.model.User;
 import com.model.UserMethods;
@@ -19,14 +18,13 @@ import static com.codeborne.selenide.Selenide.page;
 @RunWith(Parameterized.class)
 public class LoginPasswordRecoverButtonPositiveTest extends BaseSettings {
 
+    private final String browser;
     private MainPage mainPage;
     private PasswordRecoverPage passwordRecoverPage;
     private LoginPage loginPage;
     private User user;
     private UserMethods userMethods;
     private String accessToken;
-    private BasePage basePage;
-    private final String browser;
 
     public LoginPasswordRecoverButtonPositiveTest(String browser) {
         this.browser = browser;
@@ -44,12 +42,11 @@ public class LoginPasswordRecoverButtonPositiveTest extends BaseSettings {
     public void setup() {
         init(browser);
 
-        basePage = new BasePage();
         userMethods = new UserMethods();
 
         // Создание пользователя
         user = User.getRandom();
-        accessToken = basePage.createUser(user, userMethods);
+        accessToken = createUser(user, userMethods);
 
         // Открытие браузера, страницы восстановления пароля
         openPasswordRecoverPage();
@@ -58,7 +55,7 @@ public class LoginPasswordRecoverButtonPositiveTest extends BaseSettings {
     @After
     public void tearDownUser() {
         // Удаление пользователя
-        basePage.deleteUser(accessToken, userMethods);
+        deleteUser(accessToken, userMethods);
     }
 
 
@@ -71,7 +68,7 @@ public class LoginPasswordRecoverButtonPositiveTest extends BaseSettings {
         passwordRecoverPage = open(PasswordRecoverPage.PASSWORD_RECOVER_URL, PasswordRecoverPage.class);
 
         // Проверить переход на страницу восстановления пароля
-        basePage.checkUrlPage(PasswordRecoverPage.PASSWORD_RECOVER_URL);
+        checkUrlPage(PasswordRecoverPage.PASSWORD_RECOVER_URL);
     }
 
 
@@ -83,7 +80,7 @@ public class LoginPasswordRecoverButtonPositiveTest extends BaseSettings {
         passwordRecoverPage.clickLoginButton();
 
         // Проверить переход на страницу логина
-        basePage.checkUrlPage(LoginPage.LOGIN_URL);
+        checkUrlPage(LoginPage.LOGIN_URL);
 
         // Проверить наличия элементов на странице входа
         loginPage.checkLoginPageElementsIsVisible();
@@ -95,7 +92,7 @@ public class LoginPasswordRecoverButtonPositiveTest extends BaseSettings {
         loginPage.clickLoginButton();
 
         // Проверка, что вход совершен
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
         mainPage.checkTextOnMainPage();
         mainPage.checkPlaceOrderButtonText();
     }

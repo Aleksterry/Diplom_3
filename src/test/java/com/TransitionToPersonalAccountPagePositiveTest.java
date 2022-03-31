@@ -1,6 +1,5 @@
 package com;
 
-import com.model.BasePage;
 import com.model.BaseSettings;
 import com.model.User;
 import com.model.UserMethods;
@@ -18,14 +17,13 @@ import static com.codeborne.selenide.Selenide.page;
 @RunWith(Parameterized.class)
 public class TransitionToPersonalAccountPagePositiveTest extends BaseSettings {
 
+    private final String browser;
     private MainPage mainPage;
     private LoginPage loginPage;
     private AccountProfilePage accountProfilePage;
     private User user;
     private UserMethods userMethods;
     private String accessToken;
-    private BasePage basePage;
-    private final String browser;
 
     public TransitionToPersonalAccountPagePositiveTest(String browser) {
         this.browser = browser;
@@ -42,12 +40,12 @@ public class TransitionToPersonalAccountPagePositiveTest extends BaseSettings {
     @Before
     public void setup() {
         init(browser);
-        basePage = new BasePage();
+
         userMethods = new UserMethods();
 
         // Создание пользователя
         user = User.getRandom();
-        accessToken = basePage.createUser(user, userMethods);
+        accessToken = createUser(user, userMethods);
         // Открытие браузераб страницы логина
         openLoginPage();
         // Логин пользователя
@@ -57,7 +55,7 @@ public class TransitionToPersonalAccountPagePositiveTest extends BaseSettings {
     @After
     public void tearDownUser() {
         // Удаление пользователя
-        basePage.deleteUser(accessToken, userMethods);
+        deleteUser(accessToken, userMethods);
     }
 
 
@@ -70,7 +68,7 @@ public class TransitionToPersonalAccountPagePositiveTest extends BaseSettings {
         accountProfilePage = page(AccountProfilePage.class);
 
         //Проверка перехода на страницу логина
-        basePage.checkUrlPage(LoginPage.LOGIN_URL);
+        checkUrlPage(LoginPage.LOGIN_URL);
     }
 
     @Step("Login user")
@@ -84,13 +82,13 @@ public class TransitionToPersonalAccountPagePositiveTest extends BaseSettings {
     public void testTransitionToPersonalAccountPagePositive() {
 
         // Проверка перехода на главную страницу после успешного логина
-        basePage.checkUrlPage(MainPage.BASE_URL);
+        checkUrlPage(MainPage.BASE_URL);
 
         //Кликнуть "Личный кабинет"
         mainPage.clickPersonalAccountButton();
 
         // Проверить переход на страницу личного кабинета
-        basePage.checkUrlPage(AccountProfilePage.ACCOUNT_PROFILE_URL);
+        checkUrlPage(AccountProfilePage.ACCOUNT_PROFILE_URL);
 
         // Проверить наличия элементов на странице личного кабинета
         accountProfilePage.checkAccountProfilePageElementsIsVisible();
